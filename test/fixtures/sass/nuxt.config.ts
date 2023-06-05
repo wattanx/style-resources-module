@@ -1,6 +1,9 @@
+import MyModule from "../../../src/module";
+
 export default defineNuxtConfig({
-  modules: ["../src/module"],
   css: ["@/assets/a.scss", "@/assets/a.sass"],
+  // @ts-ignore
+  modules: [MyModule],
   styleResources: {
     scss: ["@/assets/nested/index.scss", "mathsass"],
     sass: ["@/assets/nested/index.sass"],
