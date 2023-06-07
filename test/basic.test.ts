@@ -1,15 +1,23 @@
 import { describe, it, expect } from "vitest";
 import { fileURLToPath } from "node:url";
-import { setup, $fetch } from "@nuxt/test-utils";
+import { setup, $fetch, fetch } from "@nuxt/test-utils";
 
-describe("ssr", async () => {
-  await setup({
-    rootDir: fileURLToPath(new URL("./fixtures/sass", import.meta.url)),
-  });
+await setup({
+  rootDir: fileURLToPath(new URL("./fixtures/sass", import.meta.url)),
+  dev: true,
+  server: true,
+});
 
-  it("renders the index page", async () => {
-    const html = await $fetch("/");
-    expect(html).toContain(".test{color:#333;line-height:16");
-    expect(html).toContain(".test{background-color:#fff");
+describe("module test", async () => {
+  it("sass", async () => {
+    const css = await $fetch("/_nuxt/app.css");
+
+    expect(css).toContain(`.test {
+  color: #333;
+  line-height: 16;
+}`);
+    expect(css).toContain(`.test {
+  background-color: #fff;
+}`);
   });
 });

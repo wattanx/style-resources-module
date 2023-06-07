@@ -44,6 +44,14 @@ export default defineNuxtModule<ModuleOptions>({
         const wrappedValue = Array.isArray(value) ? value : [value];
 
         normalizedObject[key] = wrappedValue.reduce((acc, path) => {
+          let possibleModulePath;
+          try {
+            possibleModulePath = resolveModule(path);
+          } catch (e) {}
+          if (possibleModulePath) {
+            return acc.concat(possibleModulePath);
+          }
+
           let _path: string | string[] = path;
           try {
             _path = resolveAlias(path);
