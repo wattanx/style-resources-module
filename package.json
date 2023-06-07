@@ -39,6 +39,8 @@
     "@types/node": "^18",
     "changelogen": "^0.5.3",
     "eslint": "^8.41.0",
+    "less": "^4.1.3",
+    "less-loader": "^11.1.2",
     "mathsass": "^0.11.0",
     "nuxt": "^3.5.3",
     "sass": "^1.62.1",

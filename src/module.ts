@@ -1,7 +1,5 @@
 import {
   defineNuxtModule,
-  addPlugin,
-  createResolver,
   resolveModule,
   resolveAlias,
   resolveFiles,
@@ -10,10 +8,10 @@ import {
 } from "@nuxt/kit";
 
 export interface ModuleOptions {
-  sass?: string[];
-  scss?: string[];
-  less?: string[];
-  stylus?: string[];
+  sass?: string | string[];
+  scss?: string | string[];
+  less?: string | string[];
+  stylus?: string | string[];
   hoistUseStatements?: boolean;
 }
 
@@ -39,39 +37,46 @@ export default defineNuxtModule<ModuleOptions>({
 
     const basePath = await resolvePath(".");
 
-    const retrieveStyleArrays = (styleResourcesEntries: [string, string[]][]) =>
-      styleResourcesEntries.reduce((normalizedObject, [key, value]) => {
+    const retrieveStyleArrays = async (
+      styleResourcesEntries: [string, string | string[]][]
+    ) => {
+      const normalizedObject: Record<string, string[]> = {};
+
+      for (const [key, value] of styleResourcesEntries) {
         const wrappedValue = Array.isArray(value) ? value : [value];
 
-        normalizedObject[key] = wrappedValue.reduce((acc, path) => {
-          let possibleModulePath;
-          try {
-            possibleModulePath = resolveModule(path);
-          } catch (e) {}
-          if (possibleModulePath) {
-            return acc.concat(possibleModulePath);
-          }
+        const promises = await Promise.all(
+          wrappedValue.map(async (path) => {
+            let possibleModulePath;
+            try {
+              possibleModulePath = resolveModule(path);
+            } catch (e) {}
+            if (possibleModulePath) {
+              return possibleModulePath;
+            }
 
-          let _path: string | string[] = path;
-          try {
-            _path = resolveAlias(path);
-          } catch (error) {}
+            let _path: string | string[] = path;
+            try {
+              _path = resolveAlias(path);
+            } catch (error) {}
+            _path = await resolveFiles(basePath, _path);
 
-          resolveFiles(basePath, path).then((filePath) => {
-            _path = filePath;
-          });
-          return acc.concat(_path);
-        }, [] as string[]);
+            return _path;
+          })
+        );
 
-        return normalizedObject;
-      }, {} as Record<string, string[]>);
+        normalizedObject[key] = promises.flat();
+      }
+
+      return normalizedObject;
+    };
 
     const {
       scss = [],
       sass = [],
       less = [],
       stylus = [],
-    } = retrieveStyleArrays(styleResourcesEntries);
+    } = await retrieveStyleArrays(styleResourcesEntries);
 
     if (sass.length) {
       extendWebpackConfig(extendSass({ resources: sass, hoistUseStatements }));
