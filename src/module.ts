@@ -87,10 +87,15 @@ export default defineNuxtModule<ModuleOptions>({
     }
 
     if (stylus.length) {
-      stylusLoaderOptions.import = stylusLoaderOptions.import
-        ? // @ts-ignore
-          [].concat(stylusLoaderOptions.import).concat(stylus)
-        : stylus;
+      if (!stylusLoaderOptions.stylusOptions) {
+        stylusLoaderOptions.stylusOptions = { import: stylus };
+      } else {
+        stylusLoaderOptions.stylusOptions.import = stylusLoaderOptions
+          .stylusOptions.import
+          ? // @ts-ignore
+            [].concat(stylusLoaderOptions.stylusOptions.import).concat(stylus)
+          : stylus;
+      }
     }
 
     if (less.length) {

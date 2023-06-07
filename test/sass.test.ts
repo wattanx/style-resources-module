@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { fileURLToPath } from "node:url";
-import { setup, $fetch, fetch } from "@nuxt/test-utils";
+import { setup, $fetch } from "@nuxt/test-utils";
 
 describe("sass", async () => {
   await setup({
