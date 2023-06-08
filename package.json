@@ -1,6 +1,6 @@
 {
   "name": "@wattanx/style-resources",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "@nuxtjs/style-resources module compatible with Nuxt 3",
   "repository": "https://github.com/wattanx/style-resources-module",
   "license": "MIT",
