@@ -1,3 +1,3 @@
 <template>
-  <div><Sass /></div>
+  <div><SassTest /></div>
 </template>

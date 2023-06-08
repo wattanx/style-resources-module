@@ -1,5 +1,5 @@
 <template>
   <div>
-    <Stylus />
+    <StylusTest />
   </div>
 </template>

@@ -51,6 +51,7 @@ export default defineNuxtModule<ModuleOptions>({
             let possibleModulePath;
             try {
               possibleModulePath = resolveModule(path);
+              // eslint-disable-next-line no-empty
             } catch (e) {}
             if (possibleModulePath) {
               return possibleModulePath;
@@ -59,6 +60,7 @@ export default defineNuxtModule<ModuleOptions>({
             let _path: string | string[] = path;
             try {
               _path = resolveAlias(path);
+              // eslint-disable-next-line no-empty
             } catch (error) {}
             _path = await resolveFiles(basePath, _path);
 

@@ -1,5 +1,5 @@
 <template>
   <div>
-    <Sass />
+    <SassTest />
   </div>
 </template>
