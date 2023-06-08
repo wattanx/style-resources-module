@@ -17,7 +17,8 @@ export interface ModuleOptions {
 
 export default defineNuxtModule<ModuleOptions>({
   meta: {
-    name: "styleResources",
+    name: "@wattanx/style-resources",
+    configKey: "styleResources",
   },
   defaults: {
     hoistUseStatements: false,

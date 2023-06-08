@@ -1,5 +1,9 @@
 # Style Resources Module compatible with Nuxt 3
 
+For vite, use this one.
+
+https://vitejs.dev/config/shared-options.html#css-preprocessoroptions
+
 ## Features
 
 - Share variables, mixins, functions across all style files (no `@import` needed)
@@ -156,24 +160,24 @@ $gray: #333;
 
 ```bash
 # Install dependencies
-npm install
+pnpm install
 
 # Generate type stubs
-npm run dev:prepare
+pnpm dev:prepare
 
 # Develop with the playground
-npm run dev
+pnpm dev
 
 # Build the playground
-npm run dev:build
+pnpm dev:build
 
 # Run ESLint
-npm run lint
+pnpm lint
 
 # Run Vitest
-npm run test
-npm run test:watch
+pnpm test
+pnpm test:watch
 
 # Release new version
-npm run release
+pnpm run release
 ```
